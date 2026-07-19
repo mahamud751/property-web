@@ -48,6 +48,14 @@ const examples = [
   "Open first result",
 ];
 
+/** Open voice panel from hero / other CTAs */
+export function openNivaasVoice(autoListen = true) {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(
+    new CustomEvent("nivaas-voice-open", { detail: { autoListen } })
+  );
+}
+
 export default function VoiceSiriAssistant() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -235,7 +243,7 @@ export default function VoiceSiriAssistant() {
     };
   }, []);
 
-  // Keyboard: hold Cmd/Ctrl+Shift+V
+  // Keyboard: Cmd/Ctrl+Shift+V · hero CTA event
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === "v") {
@@ -244,8 +252,21 @@ export default function VoiceSiriAssistant() {
         startListening();
       }
     };
+    const onOpen = (e: Event) => {
+      const auto =
+        (e as CustomEvent<{ autoListen?: boolean }>).detail?.autoListen !== false;
+      setOpen(true);
+      if (auto) {
+        // slight delay so panel paints before mic prompt
+        window.setTimeout(() => startListening(), 180);
+      }
+    };
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    window.addEventListener("nivaas-voice-open", onOpen);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("nivaas-voice-open", onOpen);
+    };
   }, [startListening]);
 
   return (

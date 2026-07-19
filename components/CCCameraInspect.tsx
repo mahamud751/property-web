@@ -144,7 +144,7 @@ function SingleCameraStage({
   zoom: number;
   pan: { x: number; y: number };
   dragging: boolean;
-  stageRef: React.RefObject<HTMLDivElement>;
+  stageRef: React.RefObject<HTMLDivElement | null>;
   onPointerDown: (e: React.PointerEvent) => void;
   onPointerMove: (e: React.PointerEvent) => void;
   onPointerUp: () => void;

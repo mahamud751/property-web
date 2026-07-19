@@ -1397,7 +1397,7 @@ export default function SpacesRunthrough3D({ spaces }: { spaces: Space[] }) {
   const [viewOffset, setViewOffset] = useState({ x: 0, y: 0 });
   const [realZoom, setRealZoom] = useState(false);
   const [hovering, setHovering] = useState(false);
-  const hoverTimer = useRef<number>();
+  const hoverTimer = useRef<number | undefined>(undefined);
   const active = spaces[activeRoom];
 
   const realViewScale = realZoom

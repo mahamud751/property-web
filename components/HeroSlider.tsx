@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import type { Property } from "@/lib/data";
 import { cities } from "@/lib/data";
+import { openNivaasVoice } from "@/components/VoiceSiriAssistant";
 
 const AUTO_MS = 5500;
 
@@ -183,6 +184,44 @@ export default function HeroSlider({ properties }: { properties: Property[] }) {
                 </button>
               </div>
             </form>
+
+            {/* Voice search CTA */}
+            <div className="mt-4 flex max-w-4xl flex-col gap-3 sm:flex-row sm:items-center">
+              <button
+                type="button"
+                onClick={() => openNivaasVoice(true)}
+                className="hero-voice-btn group"
+              >
+                <span className="hero-voice-orb" aria-hidden>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M12 3a3 3 0 0 0-3 3v6a3 3 0 1 0 6 0V6a3 3 0 0 0-3-3Z"
+                      fill="currentColor"
+                    />
+                    <path
+                      d="M7 11a5 5 0 0 0 10 0M12 16v4M9 20h6"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </span>
+                <span className="text-left">
+                  <span className="block text-sm font-semibold text-ivory">
+                    Ask Nivaas Voice
+                  </span>
+                  <span className="block text-xs text-fog">
+                    “Find a 3 bed in Gulshan for sale”
+                  </span>
+                </span>
+                <span className="ml-auto rounded-full bg-brass/15 px-2.5 py-1 font-mono text-[9px] uppercase tracking-widest text-brass">
+                  Siri-style
+                </span>
+              </button>
+              <p className="hidden text-xs text-fog/80 sm:block sm:max-w-[12rem]">
+                Tap and speak — we match homes and read the results aloud.
+              </p>
+            </div>
           </div>
 
           {/* Featured slide card */}

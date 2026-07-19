@@ -34,4 +34,4 @@ property photos when you're ready.
 
 ## Stack
 
-Next.js 14 (App Router) · TypeScript · Tailwind CSS · next/image
+Next.js 16.2 (App Router · Turbopack) · React 19 · TypeScript · Tailwind CSS · next/image

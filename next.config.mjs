@@ -5,6 +5,10 @@ const nextConfig = {
       { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
+  // Silence multi-lockfile root inference (parent ~/package-lock.json)
+  turbopack: {
+    root: process.cwd(),
+  },
 };
 
 export default nextConfig;

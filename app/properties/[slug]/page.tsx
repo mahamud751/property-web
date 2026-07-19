@@ -12,17 +12,23 @@ export function generateStaticParams() {
   return properties.map((p) => ({ slug: p.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const p = getProperty(params.slug);
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const p = getProperty(slug);
   return { title: p ? p.title : "Property" };
 }
 
-export default function PropertyPage({
+export default async function PropertyPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const p = getProperty(params.slug);
+  const { slug } = await params;
+  const p = getProperty(slug);
   if (!p) notFound();
 
   const similar = properties

@@ -347,6 +347,26 @@ select.field {
 
 /* ---------- Nivaas Voice (Siri-style) ---------- */
 
+.hero-voice-btn {
+  @apply flex w-full max-w-xl items-center gap-3 rounded-2xl border border-brass/30 bg-evergreen/55 px-4 py-3.5 text-left backdrop-blur-md;
+  @apply shadow-[0_8px_32px_-12px_rgba(212,176,106,0.35)];
+  @apply transition-all duration-300 ease-smooth;
+  @apply hover:border-brass/55 hover:bg-evergreen/75 hover:-translate-y-0.5;
+}
+
+.hero-voice-orb {
+  @apply relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-brass;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2), transparent 45%),
+    radial-gradient(circle at 70% 70%, rgba(212, 176, 106, 0.4), #1a2f28 70%);
+  box-shadow: 0 0 0 1px rgba(212, 176, 106, 0.35), 0 0 20px -4px rgba(212, 176, 106, 0.5);
+  animation: voiceOrbIdle 3s ease-in-out infinite;
+}
+
+.hero-voice-btn:hover .hero-voice-orb {
+  animation: voiceOrbListen 1.2s ease-in-out infinite;
+}
+
 .voice-fab {
   @apply fixed bottom-6 right-5 z-[60] flex h-14 w-14 items-center justify-center sm:bottom-8 sm:right-8;
 }

@@ -12,12 +12,12 @@ type Search = {
   status?: string;
 };
 
-export default function PropertiesPage({
+export default async function PropertiesPage({
   searchParams,
 }: {
-  searchParams: Search;
+  searchParams: Promise<Search>;
 }) {
-  const { city = "", type = "", status = "" } = searchParams;
+  const { city = "", type = "", status = "" } = await searchParams;
 
   const results = properties.filter(
     (p) =>
