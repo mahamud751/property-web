@@ -1,0 +1,398 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --evergreen: #0a1210;
+  --pine: #0e1a16;
+  --moss: #1a2f28;
+  --fern: #2a4a3c;
+  --ivory: #f6f3ec;
+  --fog: #8fa59a;
+  --brass: #d4b06a;
+  --brass-soft: rgba(212, 176, 106, 0.14);
+  --glass: rgba(14, 26, 22, 0.72);
+  --line: rgba(255, 255, 255, 0.06);
+  --line-strong: rgba(255, 255, 255, 0.1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @apply bg-evergreen text-ivory font-body antialiased;
+  background-image:
+    radial-gradient(ellipse 90% 55% at 50% -18%, rgba(42, 74, 60, 0.35), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 100% 0%, rgba(212, 176, 106, 0.04), transparent 50%);
+  min-height: 100vh;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(212, 176, 106, 0.32);
+  color: var(--ivory);
+}
+
+:focus-visible {
+  outline: 2px solid rgba(212, 176, 106, 0.7);
+  outline-offset: 3px;
+}
+
+/* ---------- shared primitives ---------- */
+
+.container-page {
+  @apply mx-auto w-full max-w-7xl px-5 lg:px-8;
+}
+
+.eyebrow {
+  @apply font-mono text-[10px] uppercase tracking-widest2 text-brass;
+}
+
+.h-display {
+  @apply font-display font-light text-ivory leading-[1.08] tracking-tight;
+}
+
+.card {
+  @apply overflow-hidden rounded-2xl border border-white/10 bg-pine/80 shadow-card;
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    transparent 40%
+  );
+}
+
+.card-hover {
+  @apply transition-all duration-300;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card-hover:hover {
+  @apply border-brass/30 shadow-lift;
+  transform: translateY(-4px);
+}
+
+.btn-brass {
+  @apply inline-flex items-center justify-center gap-2 rounded-full bg-brass px-6 py-3 text-sm font-semibold text-evergreen;
+  box-shadow: 0 8px 24px -8px rgba(212, 176, 106, 0.55);
+  @apply transition-all duration-300;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  @apply hover:bg-ivory hover:-translate-y-0.5;
+  @apply active:translate-y-0 active:scale-[0.98];
+  @apply disabled:pointer-events-none disabled:opacity-40 disabled:hover:translate-y-0;
+}
+
+.btn-brass:hover {
+  box-shadow: 0 12px 28px -10px rgba(246, 243, 236, 0.35);
+}
+
+.btn-ghost {
+  @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm text-ivory backdrop-blur-sm;
+  @apply transition-all duration-300;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  @apply hover:border-brass/50 hover:bg-brass/10 hover:text-brass hover:-translate-y-0.5;
+  @apply active:translate-y-0 active:scale-[0.98];
+}
+
+.btn-icon {
+  @apply inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-ivory;
+  @apply transition-all duration-300;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  @apply hover:border-brass/50 hover:bg-brass hover:text-evergreen;
+}
+
+.tour-icon-btn {
+  @apply rounded-full border border-white/10 bg-white/5 px-4 py-2 font-mono text-[9px] uppercase tracking-widest text-ivory;
+  @apply transition-all duration-300;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  @apply hover:-translate-y-0.5 hover:border-brass hover:text-brass;
+  @apply disabled:cursor-not-allowed disabled:opacity-40;
+}
+
+.tour-icon-btn:hover {
+  box-shadow: 0 8px 18px -8px rgba(212, 176, 106, 0.5);
+}
+
+.tour-nav-btn {
+  @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-evergreen/60 text-lg text-ivory backdrop-blur-md;
+  @apply transition-all duration-300;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  @apply hover:scale-105 hover:border-brass hover:bg-brass hover:text-evergreen;
+  @apply disabled:cursor-not-allowed disabled:opacity-30;
+}
+
+.tour-view-btn {
+  @apply flex h-8 min-w-8 items-center justify-center rounded-full px-2.5 font-mono text-[9px] uppercase tracking-wider text-fog;
+  @apply transition-all duration-300 hover:bg-white/10 hover:text-brass;
+}
+
+.tour-view-btn.is-active {
+  @apply bg-brass text-evergreen;
+}
+
+.tour-room-image {
+  will-change: transform, opacity;
+  transform-origin: center;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.tour-running-guide {
+  animation: guideRunAcross 1.8s cubic-bezier(0.45, 0, 0.35, 1) both;
+}
+
+.tour-hotspot {
+  @apply h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-brass/80 bg-evergreen/85 font-mono text-[10px] text-brass shadow-lg shadow-black/30 backdrop-blur;
+  transition:
+    transform 320ms var(--ease-out),
+    background-color 320ms ease-out,
+    color 320ms ease-out;
+}
+
+.tour-hotspot::before {
+  content: "";
+  @apply absolute -inset-2 rounded-full border border-brass/30;
+  animation: hotspotPulse 2s ease-out infinite;
+}
+
+.tour-hotspot strong {
+  @apply pointer-events-none absolute left-11 w-max max-w-[190px] translate-x-2 rounded-lg border border-white/10 bg-evergreen/95 px-3 py-2 text-left font-body text-xs font-medium normal-case tracking-normal text-ivory opacity-0 shadow-xl;
+  transition:
+    transform 320ms var(--ease-out),
+    opacity 280ms ease-out;
+}
+
+.tour-hotspot:hover,
+.tour-hotspot:focus-visible,
+.tour-hotspot.is-active {
+  @apply scale-110 bg-brass text-evergreen outline-none;
+}
+
+.tour-hotspot:hover strong,
+.tour-hotspot:focus-visible strong,
+.tour-hotspot.is-active strong {
+  @apply translate-x-0 opacity-100;
+}
+
+.tour-detail-scroll {
+  scrollbar-color: rgba(212, 176, 106, 0.7) rgba(26, 47, 40, 0.5);
+  scrollbar-width: thin;
+}
+
+@keyframes guideRunAcross {
+  0% {
+    left: -28%;
+    transform: scale(1.08);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  72% {
+    left: 42%;
+    transform: scale(0.72);
+    opacity: 1;
+  }
+  100% {
+    left: 45%;
+    transform: scale(0.42);
+    opacity: 0;
+  }
+}
+
+@keyframes hotspotPulse {
+  0% {
+    transform: scale(0.75);
+    opacity: 0;
+  }
+  45% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+.field {
+  @apply w-full rounded-xl border border-white/10 bg-evergreen/80 px-4 py-3 text-sm text-ivory outline-none;
+  @apply placeholder:text-fog/50;
+  @apply transition-all duration-300;
+  @apply hover:border-white/20;
+  @apply focus:border-brass/70 focus:bg-evergreen focus:ring-2 focus:ring-brass/20;
+  appearance: none;
+}
+
+select.field {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 4.5L6 8L9.5 4.5' stroke='%238FA59A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+.field option {
+  background: var(--pine);
+  color: var(--ivory);
+}
+
+.label {
+  @apply mb-2 block font-mono text-[10px] uppercase tracking-widest2 text-fog;
+}
+
+.hairline {
+  @apply h-px w-full;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(212, 176, 106, 0.4),
+    transparent
+  );
+}
+
+.glass {
+  @apply border border-white/10 bg-pine/70 backdrop-blur-xl;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 12px 40px -16px rgba(0, 0, 0, 0.45);
+}
+
+.panel {
+  @apply rounded-2xl border border-white/10 bg-pine/60 p-5 sm:p-6;
+}
+
+.badge {
+  @apply inline-flex items-center rounded-full px-3 py-1 font-mono text-[10px] uppercase tracking-widest2;
+}
+
+.badge-brass {
+  @apply badge bg-brass text-evergreen;
+}
+
+.badge-soft {
+  @apply badge border border-white/10 bg-evergreen/70 text-brass backdrop-blur-md;
+}
+
+.img-frame {
+  @apply relative overflow-hidden rounded-2xl border border-white/10;
+  background: var(--moss);
+}
+
+.img-frame img {
+  @apply transition-transform duration-700;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group:hover .img-frame img,
+.img-frame:hover img {
+  transform: scale(1.04);
+}
+
+/* reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.75s var(--ease-out),
+    transform 0.75s var(--ease-out);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.55s var(--ease-out) both;
+}
+
+.animate-hero-progress {
+  animation: heroProgress 5.5s linear forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes heroProgress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* CC camera PTZ pad */
+.ptz-btn {
+  @apply flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-sm text-ivory;
+  @apply transition-all duration-200 hover:border-brass/50 hover:bg-brass/15 hover:text-brass;
+  @apply active:scale-95;
+}
+
+/* section spacing */
+.section-y {
+  @apply py-20 sm:py-24 lg:py-28;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .img-frame img,
+  .btn-brass,
+  .btn-ghost,
+  .card-hover {
+    transition: none !important;
+    transform: none !important;
+  }
+  .tour-running-guide,
+  .tour-hotspot::before {
+    animation: none;
+  }
+}
+
+/* custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(42, 74, 60, 0.8);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 176, 106, 0.45);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+/* smooth image load */
+img {
+  @apply select-none;
+}
