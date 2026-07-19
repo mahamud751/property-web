@@ -345,6 +345,156 @@ select.field {
   @apply active:scale-95;
 }
 
+/* ---------- Nivaas Voice (Siri-style) ---------- */
+
+.voice-fab {
+  @apply fixed bottom-6 right-5 z-[60] flex h-14 w-14 items-center justify-center sm:bottom-8 sm:right-8;
+}
+
+.voice-fab-ring {
+  @apply absolute inset-0 rounded-full;
+  background: radial-gradient(circle, rgba(212, 176, 106, 0.45), transparent 70%);
+  animation: voiceFabPulse 2.4s ease-in-out infinite;
+}
+
+.voice-fab-core {
+  @apply relative z-10 flex h-14 w-14 items-center justify-center rounded-full border border-brass/40 text-brass shadow-glow;
+  background: linear-gradient(145deg, rgba(14, 26, 22, 0.95), rgba(10, 18, 16, 0.98));
+  backdrop-filter: blur(12px);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+}
+
+.voice-fab:hover .voice-fab-core {
+  transform: scale(1.06);
+  box-shadow: 0 0 0 1px rgba(212, 176, 106, 0.35), 0 12px 40px -10px rgba(212, 176, 106, 0.45);
+}
+
+.voice-overlay {
+  @apply fixed inset-0 z-[70] flex items-end justify-center p-3 sm:items-center sm:p-6;
+}
+
+.voice-sheet {
+  @apply relative z-10 w-full max-w-md overflow-y-auto rounded-3xl border border-white/10 p-5 shadow-2xl sm:p-7;
+  max-height: min(90vh, 720px);
+  background: linear-gradient(165deg, rgba(16, 31, 26, 0.97), rgba(8, 14, 12, 0.98));
+  backdrop-filter: blur(20px);
+  animation: voiceSheetIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.voice-orb {
+  @apply absolute inset-0 rounded-full opacity-80;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.35), transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(212, 176, 106, 0.55), transparent 50%),
+    radial-gradient(circle at 40% 70%, rgba(90, 160, 140, 0.45), transparent 45%),
+    radial-gradient(circle, #1a3d34, #0a1210 70%);
+  filter: blur(0.5px);
+  animation: voiceOrbIdle 4s ease-in-out infinite;
+}
+
+.voice-orb.is-listening {
+  animation: voiceOrbListen 1.1s ease-in-out infinite;
+  box-shadow: 0 0 60px 10px rgba(212, 176, 106, 0.25);
+}
+
+.voice-orb.is-speaking {
+  animation: voiceOrbSpeak 0.7s ease-in-out infinite;
+}
+
+.voice-orb.is-thinking {
+  animation: voiceOrbThink 1.4s linear infinite;
+}
+
+@keyframes voiceFabPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 0.35;
+  }
+}
+
+@keyframes voiceSheetIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes voiceOrbIdle {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+@keyframes voiceOrbListen {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: blur(0.5px) brightness(1.1);
+  }
+  50% {
+    transform: scale(1.14);
+    filter: blur(0.5px) brightness(1.25);
+  }
+}
+
+@keyframes voiceOrbSpeak {
+  0%,
+  100% {
+    transform: scaleY(1) scaleX(1);
+  }
+  50% {
+    transform: scaleY(1.12) scaleX(0.96);
+  }
+}
+
+@keyframes voiceOrbThink {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .voice-fab-ring,
+  .voice-orb,
+  .voice-orb.is-listening,
+  .voice-orb.is-speaking,
+  .voice-orb.is-thinking,
+  .voice-sheet {
+    animation: none !important;
+  }
+}
+
 /* section spacing */
 .section-y {
   @apply py-20 sm:py-24 lg:py-28;
